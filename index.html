@@ -19,52 +19,35 @@
 
   <!-- Local StyleSheet -->
   <link href="./style.css" rel="stylesheet" />
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.2.9/firebase-firestore.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyD9sROsumGlF7zUuu4YOHsJ6rhKz538UVc",
+      authDomain: "menu-card-bcf02.firebaseapp.com",
+      projectId: "menu-card-bcf02",
+      storageBucket: "menu-card-bcf02.appspot.com",
+      messagingSenderId: "893550143269",
+      appId: "1:893550143269:web:8b69ad9c425c6370eb9ccc"
+    };
 
+    // Initialize Firebase
+    const app = firebase.initializeApp(firebaseConfig);</script>
   <!--JS Files-->
   <script src="./js/markerHandler.js"></script>
   <script src="./js/addButtons.js"></script>
-
+  <script src="./js/createMarkers.js"></script>
 </head>
 
 <body style="margin : 0px; overflow: hidden;">
-  <a-scene vr-mode-ui="enabled: false"
-    embedded
-    arjs="sourceType: webcam; 
+  <a-scene vr-mode-ui="enabled: false" embedded arjs="sourceType: webcam; 
     sourceWidth:1280; sourceHeight:960; 
     displayWidth: 1280; displayHeight: 960; 
-    debugUIEnabled: false;"
-    gesture-detector create-buttons>
+    debugUIEnabled: false;" gesture-detector create-buttons id="scene" create-markers>
 
     <!-- Camera -->
     <a-entity camera></a-entity>
 
-    <a-assets>
-      <a-asset-item id="pizza-model" src="./assets/pizza/scene.gltf"></a-asset-item>
-    </a-assets>
-
-    <!--Pattern Marker-->
-    <a-marker id="pizza-marker" type="pattern" url="assets/dish-markers/pattern-pizza.patt" cursor="rayOrigin: mouse"
-      markerhandler>
-
-      <!-- Pizza Model -->
-      <a-entity id="pizza-3D-model" position="-2 1 0.1" scale="0.05 0.05 0.05" gltf-model="#pizza-model"
-        gesture-handler>
-      </a-entity>
-
-      <!-- Ingredients -->
-      <a-plane position="0 0 0" width="1.5" height="1.5" rotation="-90 0 0">
-        <a-plane position="0 0.89 0.02" width="1.49" height="0.3" rotation="0 0 0" color="#F0C30F">
-          <a-entity position="0 0 0.1" rotation="0 0 0"
-            text="font:monoid;value:PIZZA MARGHERITA;color:black;width: 1.8;height:1;align:center;"></a-entity>
-        </a-plane>
-
-        <a-entity position="0 0 0.1" rotation="0 0 0"
-          text="color: black; align: center; width: 2; font: monoid;
-               value: Tomato sauce\n\nMozzarella cheese\n\nParmesan cheese (optional)\n\nFresh Basil\n\nOlive oil\n\nBlack pepper (optional)">
-        </a-entity>
-      </a-plane>
-
-    </a-marker>
   </a-scene>
 
   <div id="button-div"></div>

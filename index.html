@@ -53,6 +53,29 @@
 
   <div id="button-div"></div>
 
+
+  <div class="container">
+    <div id="modal-div" class="modal" tabindex="-1" role="dialog">
+      <h3>Order Summary</h3>
+      <button type="button" class="close" data-dismiss="modal" aria-label="close" onclick="closeModal()"></button>
+      <div>
+        <table>
+          <thead>
+            <tr>
+              <td>Item</td>
+              <td>Price</td>
+              <td>Quantity</td>
+              <td>Total</td>
+            </tr>
+          </thead>
+          <tbody id="bill-table-body">
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
 </body>
 
 </html>

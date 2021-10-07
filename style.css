@@ -1,5 +1,5 @@
 button {
-  width:120px;
+  width: 120px;
 }
 
 #button-div {
@@ -8,12 +8,22 @@ button {
   justify-content: space-around;
   position: fixed;
   bottom: 10px;
-  width:100%;
+  width: 100%;
   z-index: 1;
   border: 2px soild black;
 }
 
-.swal-icon img{
+.swal-icon img {
   width: 80px;
   height: 80px;
+}
+
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  padding-top: 100px;
+  width: 80%;
+  height: 80%;
+  background-color: white;
 }

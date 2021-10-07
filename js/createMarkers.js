@@ -11,7 +11,7 @@ AFRAME.registerComponent("create-markers", {
       marker.setAttribute("cursor", {
         rayOrigin: "mouse",
       });
-      marker.setAttribute("marker-handler", {});
+      marker.setAttribute("markerhandler", {});
       mainScene.appendChild(marker);
 
       const todaysDate = new Date();

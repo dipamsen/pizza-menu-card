@@ -1,7 +1,7 @@
 AFRAME.registerComponent("create-buttons", {
-  init: function() {
+  init: function () {
     // 1. Create the button
-    var button1 = document.createElement("button");    
+    var button1 = document.createElement("button");
     button1.innerHTML = "RATE DISH";
     button1.setAttribute("id", "rating-button");
     button1.setAttribute("class", "btn btn-warning mr-3");
@@ -16,5 +16,10 @@ AFRAME.registerComponent("create-buttons", {
     var buttonDiv = document.getElementById("button-div");
     buttonDiv.appendChild(button1);
     buttonDiv.appendChild(button2);
-  }
+
+    const btn3 = document.createElement("button");
+    btn3.innerHTML = "ORDER SUMMARY";
+    btn3.setAttribute("id", "summary-btn");
+    btn3.setAttribute("class", "btn btn-warning");
+  },
 });

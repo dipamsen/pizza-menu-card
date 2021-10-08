@@ -61,6 +61,7 @@ AFRAME.registerComponent("markerhandler", {
       const ratingButton = document.getElementById("rating-button");
       const orderButtton = document.getElementById("order-button");
       const summaryButton = document.getElementById("summary-button");
+      const payButton = document.getElementById("pay-button");
 
       // Handling Click Events
       if (tableNo !== null) {
@@ -87,6 +88,10 @@ AFRAME.registerComponent("markerhandler", {
 
         summaryButton.addEventListener("click", () => {
           this.handleOrderSummary();
+        });
+
+        payButton.addEventListener("click", () => {
+          this.handlePayments();
         });
       }
 
@@ -162,9 +167,87 @@ AFRAME.registerComponent("markerhandler", {
       .then((doc) => doc.data());
   },
 
-  handleOrderSummary() {
+  async handleOrderSummary() {
+    let tNo;
+    tableNo <= 9 ? (tNo = `t0${tableNo}`) : `t${tableNo}`;
+    const summary = await this.getOrderSummary(tNo);
+
+    const modalDiv = document.getElementById("modal-div");
+    modalDiv.style.display = "flex";
+    const tableBodyTag = document.getElementById("bill-table-body");
+    tableBodyTag.innerHTML = "";
+
+    const currOrders = Object.keys(summary.current_orders);
+    currOrders.map((i) => {
+      const tr = document.createElement("tr");
+      const item = document.createElement("td");
+      const price = document.createElement("td");
+      const quantity = document.createElement("td");
+      const subtotal = document.createElement("td");
+
+      item.innerHTML = summary.current_orders[i].item;
+
+      price.innerHTML = `$` + summary.current_orders[i].price;
+      price.setAttribute("class", "text-center");
+
+      quantity.innerHTML = summary.current_orders[i].quantity;
+      quantity.setAttribute("class", "text-center");
+
+      subtotal.innerHTML = `$` + summary.current_orders[i].sub_total;
+      subtotal.setAttribute("class", "text-center");
+
+      tr.appendChild(item);
+      tr.appendChild(price);
+      tr.appendChild(quantity);
+      tr.appendChild(subtotal);
+
+      tableBodyTag.appendChild(tr);
+    });
+
+    const totalTr = document.createElement("tr");
+    const td1 = document.createElement("td");
+    td1.setAttribute("class", "no-line");
+    const td2 = document.createElement("td");
+    td2.setAttribute("class", "no-line");
+    const td3 = document.createElement("td");
+    td1.setAttribute("class", "no-line text-center");
+
+    const strongTag = document.createElement("strong");
+    strongTag.innerHTML = "Total";
+    td3.appendChild(strongTag);
+
+    const td4 = document.createElement("td");
+    td1.setAttribute("class", "no-line text-right");
+    td4.innerHTML = "$" + summary.total_bill;
+
+    totalTr.appendChild(td1);
+    totalTr.appendChild(td2);
+    totalTr.appendChild(td3);
+    totalTr.appendChild(td4);
+
+    tableBodyTag.appendChild(totalTr);
+  },
+
+  handlePayments() {
+    document.getElementById("modal-div").style.display = "none";
     let tNo;
     tableNo <= 9 ? (tNo = `t0${tableNo}`) : (tNo = `t${tableNo}`);
-    const summary = this.getOrderSummary(tNo);
+    firebase
+      .firestore()
+      .collection("tables")
+      .doc(tNo)
+      .update({
+        current_orders: {},
+        total_bill: 0,
+      })
+      .then(() => {
+        swal({
+          icon: "success",
+          title: "Thanks for Paying",
+          text: "We hope you enjoyed your food!",
+          timer: 2500,
+          buttons: false,
+        });
+      });
   },
 });

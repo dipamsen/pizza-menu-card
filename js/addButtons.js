@@ -12,14 +12,15 @@ AFRAME.registerComponent("create-buttons", {
     button2.setAttribute("id", "order-button");
     button2.setAttribute("class", "btn btn-warning mr-4");
 
+    const btn3 = document.createElement("button");
+    btn3.innerHTML = "ORDER SUMMARY";
+    btn3.setAttribute("id", "summary-button");
+    btn3.setAttribute("class", "btn btn-warning");
+
     // 2. Append somewhere
     var buttonDiv = document.getElementById("button-div");
     buttonDiv.appendChild(button1);
     buttonDiv.appendChild(button2);
-
-    const btn3 = document.createElement("button");
-    btn3.innerHTML = "ORDER SUMMARY";
-    btn3.setAttribute("id", "summary-btn");
-    btn3.setAttribute("class", "btn btn-warning");
+    buttonDiv.appendChild(btn3);
   },
 });

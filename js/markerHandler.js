@@ -64,36 +64,30 @@ AFRAME.registerComponent("markerhandler", {
       const payButton = document.getElementById("pay-button");
 
       // Handling Click Events
-      if (tableNo !== null) {
-        ratingButton.addEventListener("click", function () {
-          swal({
-            icon: "warning",
-            title: "Rate Dish",
-            text: "Work In Progress",
-          });
-        });
+      ratingButton.addEventListener("click", () => {
+        this.handleRating(dish);
+      });
 
-        orderButtton.addEventListener("click", () => {
-          let tNo;
-          tableNo <= 9 ? (tNo = `t0${tableNo}`) : (tNo = `t${tableNo}`);
-          this.handleOrder(tNo, dish);
-          swal({
-            icon: "https://i.imgur.com/4NZ6uLY.jpg",
-            title: "Thanks For Order!",
-            text: "Your order will be served soon at your table!",
-            timer: 2000,
-            buttons: false,
-          });
+      orderButtton.addEventListener("click", () => {
+        let tNo;
+        tableNo <= 9 ? (tNo = `t0${tableNo}`) : (tNo = `t${tableNo}`);
+        this.handleOrder(tNo, dish);
+        swal({
+          icon: "https://i.imgur.com/4NZ6uLY.jpg",
+          title: "Thanks For Order!",
+          text: "Your order will be served soon at your table!",
+          timer: 2000,
+          buttons: false,
         });
+      });
 
-        summaryButton.addEventListener("click", () => {
-          this.handleOrderSummary();
-        });
+      summaryButton.addEventListener("click", () => {
+        this.handleOrderSummary();
+      });
 
-        payButton.addEventListener("click", () => {
-          this.handlePayments();
-        });
-      }
+      payButton.addEventListener("click", () => {
+        this.handlePayments();
+      });
 
       const priceplane = document.querySelector(`#priceplane-${dish.id}`);
       priceplane.setAttribute("visible", true);
@@ -150,6 +144,51 @@ AFRAME.registerComponent("markerhandler", {
         firebase.firestore().collection("tables").doc(doc.id).update(details);
       });
   },
+
+  async handleRating(dish) {
+    let tNo;
+    tableNo <= 9 ? (tNo = `t0${tableNo}`) : (tNo = `t${tableNo}`);
+    const orderSummary = await this.getOrderSummary(tNo);
+    const currentOrders = Object.keys(orderSummary.current_orders);
+    if (currentOrders.length > 0 && currentOrders == dish.id) {
+      document.getElementById("rating-modal-div").style.display = "flex";
+      document.getElementById("rating-input").value = "0";
+      document.getElementById("feedback-input").value = "";
+      const saveRtgBtn = document.getElementById("save-rating-button");
+      saveRtgBtn.addEventListener("click", () => {
+        document.getElementById("rating-modal-div").style.display = "none";
+        const rating = document.getElementById("rating-input").value;
+        const feedback = document.getElementById("feedback-input").value;
+
+        firebase
+          .firestore()
+          .collection("dishes")
+          .doc(dish.id)
+          .update({
+            last_review: feedback,
+            last_rating: rating,
+          })
+          .then(() => {
+            swal({
+              icon: "success",
+              title: "Thanks for rating",
+              text: "We hope you liked the dish!",
+              time: 2500,
+              buttons: false,
+            });
+          });
+      });
+    } else {
+      swal({
+        icon: "warning",
+        title: "Oops!",
+        title: "Dish not found",
+        timer: 2500,
+        buttons: false,
+      });
+    }
+  },
+
   async getDishes() {
     const db = firebase.firestore();
     return await db

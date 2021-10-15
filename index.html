@@ -13,6 +13,13 @@
   <!-- Bootstrap -->
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous" />
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+
+  <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/css/bootstrap.min.css" rel="stylesheet"
+    id="bootstrap-css" />
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.0/js/bootstrap.min.js"></script>
+  <script src="https://code.jquery.com/jquery-1.11.1.min.js"></script>
 
   <!-- SweetAlert -->
   <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
@@ -35,6 +42,7 @@
     const app = firebase.initializeApp(firebaseConfig);
   </script>
   <!--JS Files-->
+  <script src="./js/stars.js"></script>
   <script src="./js/markerHandler.js"></script>
   <script src="./js/addButtons.js"></script>
   <script src="./js/createMarkers.js"></script>
@@ -82,9 +90,37 @@
               </table>
             </div>
           </div>
+
           <div class="modal-footer">
             <button id="pay-button" type="button" class="btn btn-primary">
               Pay Now
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div id="rating-modal-div" class="rating-modal" tabindex="-1" role="dialog">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Rate Dish</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close" onclick="closeModal()">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="table-responsive">
+              <textarea class="form-control" id="feedback-input" rows="3"></textarea>
+              <input id="rating-input" name="rating-input" class="rating rating-loading" data-min="0" data-max="5"
+                data-step="0.1" value="0" type="text" />
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button id="save-rating-button" type="button" class="btn btn-primary">
+              Submit
             </button>
           </div>
         </div>
@@ -99,6 +135,11 @@
       document.getElementById("modal-div").style.display = "none"
     }
 
+  </script>
+  <script>
+    function closeRatingModal() {
+      document.getElementById("rating-modal-div").style.display = "none"
+    }
   </script>
 
 </body>

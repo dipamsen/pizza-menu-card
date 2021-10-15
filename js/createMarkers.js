@@ -113,6 +113,42 @@ AFRAME.registerComponent("create-markers", {
         pricePlane.appendChild(price);
 
         marker.appendChild(pricePlane);
+
+        const dishRatingPlane = document.createElement("a-entity");
+        dishRatingPlane.setAttribute("id", `rating-plane-${dish.id}`);
+        dishRatingPlane.setAttribute("position", { x: 2, y: 0, z: 0.5 });
+        dishRatingPlane.setAttribute("geometry", {
+          primitive: "plane",
+          width: 1.5,
+          height: 0.3,
+        });
+        dishRatingPlane.setAttribute("material", {
+          color: "pink",
+        });
+        dishRatingPlane.setAttribute("rotation", {
+          x: -90,
+          y: 0,
+          z: 0,
+        });
+        dishRatingPlane.setAttribute("visible", false);
+
+        const rating = document.createElement("a-entity");
+        rating.setAttribute("id", `rating-${dish.id}`);
+        rating.setAttribute("position", { x: 0, y: 0.05, z: 0.1 });
+
+        rating.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+        rating.setAttribute("text", {
+          font: "mozillavr",
+          color: "black",
+          width: 2.4,
+          align: "center",
+          value: `CUSTOMER RATING: ${dish.last_rating}`,
+        });
+
+        dishRatingPlane.appendChild(rating);
+        marker.appendChild(dishRatingPlane);
+
+        // const dishReviewPlane = docu;
       }
     });
   },

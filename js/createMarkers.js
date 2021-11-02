@@ -148,7 +148,32 @@ AFRAME.registerComponent("create-markers", {
         dishRatingPlane.appendChild(rating);
         marker.appendChild(dishRatingPlane);
 
-        // const dishReviewPlane = docu;
+        const dishReviewPlane = document.createElement("a-entity");
+        dishReviewPlane.setAttribute("id", `review-plane-${dish.id}`);
+        dishReviewPlane.setAttribute("position", { x: 2, y: 0, z: 0 });
+        dishReviewPlane.setAttribute("geometry", {
+          primitive: "plane",
+          width: 1.5,
+          height: 0.5,
+        });
+        dishReviewPlane.setAttribute("material", { color: "lightblue" });
+        dishReviewPlane.setAttribute("rotation", { x: -90, y: 0, z: 0 });
+        dishReviewPlane.setAttribute("visible", false);
+
+        const review = document.createElement("a-entity");
+        review.setAttribute("id", `review-${dish.id}`);
+        review.setAttribute("position", { x: 0, y: 0.05, z: 0.1 });
+        review.setAttribute("rotation", { x: 0, y: 0, z: 0 });
+        review.setAttribute("text", {
+          font: "mozillavr",
+          color: "black",
+          width: 2.4,
+          align: "center",
+          value: `CUSTOMER REVIEW: \n${dish.last_review}`,
+        });
+
+        dishReviewPlane.appendChild(review);
+        marker.appendChild(dishReviewPlane);
       }
     });
   },
